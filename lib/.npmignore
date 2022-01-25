@@ -1,0 +1,11 @@
+# Ignore everything
+/*
+
+!commands/**/*
+!plugins/**/*
+!addCommands.js
+!addPlugins.js
+
+# Ignore tests and coverage
+coverage/
+**/*.spec.js

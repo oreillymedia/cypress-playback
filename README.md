@@ -1,0 +1,453 @@
+# Cypress Playback
+
+> :arrows_counterclockwise: **_Automatically record and playback HTTP requests made in
+> Cypress tests._**
+
+[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](code_of_conduct.md)
+
+Cypress Playback is a plugin and a set of commands that allows Cypress to
+automatically record responses to network requests made during a test run. These
+responses are then saved to disk and made available for playback in later test
+runs. This allows for applications or components under test to always receive
+the same response to a request, no matter where or when they run.
+
+This plugin is *not* a replacement for the `cy.intercept` command, but is
+instead a wrapper around that command. It handles situations where a developer
+isn't concerned with the contents of a response to a network request, just that
+the response is always the same.
+
+## Installation
+
+**Step 1.** In a project with Cypress installed, run:
+
+```bash
+npm install @oreillymedia/cypress-playback -D
+```
+
+**Step 2.** Add the tasks to the project's `cypress/plugins/index.js` file:
+
+```JavaScript
+module.exports = (on, config) => {
+  require('@oreillymedia/cypress-playback/addPlugins')(on, config);
+  // Add any other tasks
+  return config;
+};
+```
+
+**Step 3.** Add the commands to the project's `cypress/support/index.js` file:
+
+```JavaScript
+import '@oreillymedia/cypress-playback/addCommands';
+```
+
+## The `playback` command
+
+The `playback` command is a wrapper around the [Cypress' `intercept`][1] command
+and can be used in much the same way.
+
+A notable exception is that it doesn't provide any way to attach a request
+handler or a provide a static response, as that isn't the purpose of this
+plugin. This plugin is designed to capture real responses and record them for
+later playback. For providing fixtures as responses, the normal `cy.intercept`
+command should be used.
+
+### Syntax
+
+```JavaScript
+// Records or plays back network responses, depending on the value of
+// `PLAYBACK_MODE` in the Cypress environment.
+cy.playback(method, url, playbackOptions);
+cy.playback(method, routeMatcher, playbackOptions);
+```
+
+#### Usage
+```JavaScript
+// Capturing a request.
+cy.playback('POST', \/users\/);
+// Providing playback options.
+cy.playback('GET', \/todos\/, { minTimes: 2 });
+// Aliasing the request for later use in the test.
+cy.playback('GET', 'https://www.example.com/300/150').as('image');
+```
+
+#### Arguments
+
+##### **method (string)**
+
+Capture requests using this specific HTTP method (`GET`, `POST`, etc).
+
+> 🚨 **NOTE:** Unlike the `intercept` command, the command requires a `method`
+> argument.
+
+##### **url (string, glob, RegExp)**
+
+Capture requests that match this value. See the `intercept` command's ["Matching
+url"][2] documentation for more details.
+
+##### **routeMatcher (RouteMatcher)**
+
+An object used to define a request that can be captured. See the `intercept`
+command's ["RouteMatcher"][3] documentation for more details.
+
+##### **playbackOptions (PlaybackOptions)**
+
+`playbackOptions` is an object used to modify the behavior of the `playback`
+command. Below is an example object using all of the available properties.
+
+```JavaScript
+{
+  minTimes: 2,
+  recording: {
+    matchingIgnores: ['port'],
+    rewriteOrigin: 'https://not-example.com',
+    allowAllStatusCodes: true
+  }
+}
+```
+
+###### **playbackOptions.minTimes (number)**
+
+The minimum number of times the system under test must trigger a request that
+matches the `url` or `routeMatcher`. See ["All Requests Complete" Assertions][6]
+for more details.
+
+*Default:* `1` - At least 1 request must have been matched.
+
+###### **playbackOptions.recording (object)**
+
+This object modifies the behavior of the command when it is recording a network
+response to a request.
+
+*Default:* `undefined`
+
+###### **playbackOptions.recording.matchingIgnores (string[])**
+
+An array consisting of one or more of the following values:
+
+* `protocol`
+* `hostname`
+* `port`
+* `pathname`
+* `search`
+* `method`
+* `body`
+
+See the ["Requests and Responses"][5] section below for more details on how to
+use this property.
+
+*Default:* `undefined`
+
+###### **playbackOptions.recording.allowAllStatusCodes (boolean)**
+
+By default, the command will only record responses that have a `2xx` status
+code. By setting this to `true`, all responses will be recorded.
+
+Note that trying to record `3xx` responses will lead to some strange behavior
+and is area where more work is needed in the plugin.
+
+*Default:* `false`
+
+#### Yields
+
+The command yields the response of the `cy.intercept` command it is wrapping.
+See the `intercept` command's ["Yields"][4] section for more details.
+
+### Requests and Responses
+
+Since the words "request" and "response" can have a few meanings, it's helpful
+to provide a few definitions first:
+
+* **Request**: A network request made by the browser that may be intercepted by
+  a request matcher.
+* **Response**: The response sent back to the browser's network request. The
+  plugin saves responses to the automatically created fixture file.
+* **Request Matcher:** This is what is being created by calling the
+  `cy.playback` command. Request matchers are saved to the automatically created
+  fixtures file. Depending on how the route matching is setup in the matcher,
+  the plugin may record multiple responses for a single matcher.
+
+> 🚨 **A Warning on Secrets:** A response that is recorded in the fixtures file,
+> which will likely be committed to the project's repository, will contain the
+> response's headers and body. While this file is binary and is compressed, it
+> isn't encrypted or protected in any way. When recording responses, make sure
+> there aren't any secrets used by a request or returned in a response that you
+> wouldn't want exposed.
+
+#### Request Matching versus Response Matching
+
+Since a developer can create a request matcher that can potentially match
+multiple requests, it's important that the plugin know how to return the right
+response to any individual request. That means the plugin is performing both
+request matching and response matching.
+
+To explain this better, consider the examples below.
+
+#### Example 1: Multiple Requests to the Same Request Matcher
+
+The developer wants to record all requests made to `/api/v1/todo/`. Their app
+will be making multiple calls to this Api, each with an id value appended to the
+end. The developer sets up the following `playback` command in their test:
+
+```JavaScript
+cy.playback('GET', new RegExp('/api/v1/todo/'));
+```
+
+Internally, the plugin is calling `cy.intercept` with that RegExp as the route
+matcher. The app, over the course of the test, makes requests to
+`/api/v1/todo/1` through `/api/v1/todo/5`. The plugin's wrapped `intercept`
+command intercepts all of those requests and its custom request handler is
+called with the full details for each request that is being made. For example,
+that means the request handler will see information such as a request to
+`https://example.com/api/v1/todo/1` was made.
+
+What happens next depends on what mode the plugin is in:
+
+* If the plugin is in "playback" mode, it will try to find a recorded response
+  for that specific request.
+* If the plugin is in "record" mode, it will capture the response and write it
+  to disk when the test is completed.
+
+More details on the plugin's mode can be found below.
+
+##### Example 2: Differences between Test Environments
+
+The developer is recording requests made to their local instance, which is
+hosted at `http://localhost:4200`. As it runs, the app will be making requests
+to `http://localhost:4200/api/v1/todo/`. However, in the project's CI job, the
+tests will be run in a Docker container, so the app will be hosted at
+`http://test:8000`.
+
+This is a problem, because by default the plugin expects every attribute of the
+request to match. The attributes that must match are:
+
+* `protocol`
+* `hostname`
+* `port`
+* `pathname`
+* `search`
+* `method`
+* `body`
+
+If any of those are different, the recorded response won't be returned. However,
+the `matchingIgnores` property allows the developer to specifically say certain
+attributes shouldn't be considered.
+
+> ℹ️ Note that while headers are recorded and played back, they are not used
+> when trying to look up a matching response. This is because headers tend to
+> vary considerably, so they are always ignored. However, functionality could be
+> added to the plugin to allow a developer to specify which headers to include
+> when matching.
+
+In this case, since the `hostname` and `port` are going to be different, the
+developer should write their `playback` command like this:
+
+```JavaScript
+cy.playback('GET', new RegExp('/api/v1/todo/'), {
+  recording: {
+    matchingIgnores: ['hostname', 'port']
+  }
+});
+```
+
+Of course, there is a danger that if too many attributes of a request are
+ignored, the plugin won't find the correct response. For example, if every
+request attribute were ignored, then every recorded response would be a match.
+It's best to limit the list of ignored attributes to smallest number possible.
+
+### Playback Mode
+
+The plugin can be run in one of three different modes:
+
+* `playback` - Previously recorded responses are played back. If a matching
+  response is not found for the intercepted request, an error is thrown and the
+  test will fail. This is the default mode when Cypress is started with the
+  `run` option.
+* `record` - All request responses are recorded and any previously recorded
+  responses are ignored.
+* `hybrid` - If a previously recorded response matches the intercepted request,
+  the plugin plays back that response. Otherwise, the response is recorded when
+  the request completes. This is the default mode when Cypress is started with
+  the `open` option.
+
+The mode can be overridden through an environment variable:
+
+```bash
+CYPRESS_PLAYBACK_MODE=record npx cypress open
+```
+
+It can also be set in the `cypress.json`:
+
+```json
+{
+  "env": {
+    "PLAYBACK_MODE": "record"
+  }
+}
+```
+
+### "All Requests Complete" Assertion
+
+During the `afterEach` stage of a test, the plugin will assert that all request
+matchers were matched a minimum number of times. The default number of times is
+`1`, but that value can be changed through the `minTimes` option.
+
+```JavaScript
+// This request matcher is considered optional, so don't fail the test. There
+// is a danger in this, though. See the "Why This is Important" section below.
+cy.playback('GET', new RegExp('/api/v1/todo/'), { minTimes: 0 });
+// This request matcher must be matched 5 times, or the test will fail.
+cy.playback('GET', new RegExp('/api/v1/todo/'), { minTimes: 5 });
+```
+
+What the plugin is doing during the `afterEach` stage is, over a period of time,
+checking to see if any request matchers still have not been matched their
+minimum number of times. If after 10 seconds, the expected number of requests is
+still not met, the plugin fails the test.
+
+#### Why This is Important
+
+There are two factors that make this assertion important. One factor is that
+Cypress may consider a test complete before all the network requests made by the
+system under test are received. The other factor is that the order in which
+network requests complete is non-deterministic. This means that during one test
+run a request may complete before the test does, while in another it has not.
+
+To handle that, the plugin tries to make sure every `playback` command has
+received a response that can be recorded. This is to ensure that all request
+matchers have responses available when the test is run in "playback" mode.
+
+This is why an "optional" request matchers can be dangerous. If a response is
+not captured for a request in `record` mode, the test would fail when that
+request was made when in `playback` mode.
+
+#### "Stale" Request Matchers and Responses
+
+As applications and tests change over time, requests that were once made may not
+be in the future. To keep these old request matchers and responses from building
+up in the recorded fixtures file, the plugin considers any request matcher or
+response loaded from disk as "stale". These stale entities are automatically
+removed when the fixtures file is written to disk.
+
+A "stale" entity becomes "fresh" when...
+
+* Request matchers are considered "fresh" if a `cy.playback` command is invoked
+  in the test that matches their `method`, `url` or `routeMatcher`, and playback
+  options.
+* Responses are considered "fresh" if a single request is made that exactly
+  matches the request attributes they match on. Meaning, a request was made that
+  matches the `post`, `hostname`, etc. they match on.
+
+### The Recorded Fixtures File
+
+All the captured responses for a test are grouped together into a single
+`.cy-requests` file that is saved to the Cypress fixtures folder. A subdirectory
+is created in the fixtures folder for each spec file. Within that folder, a
+fixture file is created for each test in the spec file. The file name is a
+combination of the test's name and any `describe` blocks it is nested under.
+
+Consider the following example spec file.
+
+* **File Name:** `./cypress/integration/app/basic.spec.js`
+* **Spec File Contents:**
+  ```JavaScript
+  describe('app', () => {
+    it('works', () => {
+      // Test code.
+    });
+    it('still works', () => {
+      // Test code.
+    });
+    describe('another language', () => {
+      it('works', () => {
+        // Test code.
+      });
+    });
+  });
+  ```
+* **Generated Fixture Files:**
+  ```bash
+  ./cypress/fixtures/app/basic-spec/app-works.cy-requests
+  ./cypress/fixtures/app/basic-spec/app-still-works.cy-requests
+  ./cypress/fixtures/app/basic-spec/app-another-language-works.cy-requests
+  ```
+
+> ⚠️ As can seen, if the location of the spec file or the structure or name of
+> the test changes, the generated file location and name will change as well.
+> This means your project could end up with orphaned fixture files, as the
+> plugin doesn't keep track of changes made to file names.
+
+#### File Format
+
+The `.cy-requests` file is a binary file, which is created by JSON stringifying
+the request matchers and requests and compressing that output with Node's
+`zlib.deflate` function. There are two reasons for this approach:
+
+* As a compressed binary file it will take up less space on disk and Git LFS can
+  be used to store them.
+* The unreadable nature of the file prevents developers from easily being able
+  to edit them. This is important, because the plugin overwrites the fixture
+  file whenever a test completes, so any manual edits would be immediately lost.
+
+## The `isPlayingBackRequests` command
+
+This command can be used to allow conditional logic in a test when the plugin
+will playback recorded requests.
+
+### Syntax
+
+```JavaScript
+cy.isPlayingBackRequests();
+```
+
+### Usage
+
+```JavaScript
+cy.isPlayingBackRequests().then((isPlayingBack) => {
+  cy.log(`isPlayingBack: ${isPlayingBack}`);
+});
+```
+
+### Arguments
+
+None
+
+### Yields
+
+* `cy.isPlayingBackRequests` yields `true` if the playback mode is `playback` or
+  `hybrid.` Otherwise, yields `false`.
+
+## The `isRecordingRequests` command
+
+This command can be used to allow conditional logic in a test when the playback
+mode is set to `record`. For example, this could be used to perform a login step
+that wouldn't be needed in playback mode.
+
+### Syntax
+
+```JavaScript
+cy.isRecordingRequests();
+```
+
+### Usage
+
+```JavaScript
+cy.isRecordingRequests().then((isRecording) => {
+  cy.log(`isRecording: ${isRecording}`);
+});
+```
+
+### Arguments
+
+None
+
+### Yields
+
+* `cy.isRecordingRequests` yields `true` if the playback mode is `record` or
+  `hybrid.` Otherwise, yields `false`.
+
+[1]:https://docs.cypress.io/api/commands/intercept
+[2]:https://docs.cypress.io/api/commands/intercept#Matching-url
+[3]:https://docs.cypress.io/api/commands/intercept#routeMatcher-RouteMatcher
+[4]:https://docs.cypress.io/api/commands/intercept#Yields
+[5]:#requests-and-responses
+[6]:#all-requests-complete-assertion

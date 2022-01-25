@@ -1,0 +1,23 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Mocha Current File",
+      "cwd": "${workspaceFolder}/lib",
+      "program": "${cwd}/lib/node_modules/mocha/bin/_mocha",
+      "args": [
+        "--no-config",
+        "--require", "${workspaceFolder}/lib/tests/setup.js",
+        "--timeout", "999999",
+        "--colors",
+        "${file}"
+      ],
+      "internalConsoleOptions": "openOnSessionStart",
+      "skipFiles": [
+        "<node_internals>/**"
+      ]
+    }
+  ]
+}
