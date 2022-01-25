@@ -1,0 +1,8 @@
+coverage/
+node_modules/
+sandbox/cypress/screenshots/
+sandbox/cypress/videos/
+secrets/
+# junk
+.DS_Store
+*.tgz

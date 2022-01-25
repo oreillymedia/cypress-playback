@@ -1,0 +1,33 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      npmTag:
+        type: choice
+        description: Whether this release should be tagged as latest or alpha in the registry.
+        options:
+        - latest
+        - alpha
+
+jobs:
+  release:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    env:
+      lib-directory: ./lib
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: git config
+        run: |
+          git config user.name "${GITHUB_ACTOR}"
+          git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+      - run: npm ci --silent
+        working-directory: ${{env.lib-directory}}
+      - run: npm run release ${{ fromJSON('["", "-- --preRelease alpha"]')[github.event.inputs.npmTag == 'alpha'] }}
+        working-directory: ${{env.lib-directory}}
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          NPM_TOKEN: ${{secrets.NPM_TOKEN}}

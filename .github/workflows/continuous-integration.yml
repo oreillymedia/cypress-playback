@@ -1,0 +1,29 @@
+name: Continuous Integration
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      lib-directory: ./lib
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: '16.x'
+        cache: 'npm'
+        registry-url: 'https://registry.npmjs.org'
+        scope: '@oreillymedia'
+    - name: Install Dependencies
+      run: npm ci --silent
+      working-directory: ${{env.lib-directory}}
+    - name: Lint
+      run: npm run lint --if-present
+      working-directory: ${{env.lib-directory}}
+    - name: Build
+      run: npm run build --if-present
+      working-directory: ${{env.lib-directory}}
+    - name: Test
+      run: npm test
+      working-directory: ${{env.lib-directory}}

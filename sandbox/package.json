@@ -1,0 +1,19 @@
+{
+  "name": "@oreillymedia/cypress-playback-sandbox",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Sandbox for developing and testing the @oreillymedia/cypress-playback library.",
+  "main": "index.js",
+  "scripts": {
+    "start:open": "start-server-and-test 'http-server ./app --port=8081' 8081 'cypress open'",
+    "start:run": "start-server-and-test 'http-server ./app --port=8082' 8082 'cypress run'"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "cypress": "^9.0.0",
+    "http-server": "^14.1.0",
+    "start-server-and-test": "^1.14.0"
+  }
+}
