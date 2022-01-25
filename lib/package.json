@@ -1,10 +1,10 @@
 {
   "name": "@oreillymedia/cypress-playback",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint '**/*.js'",
+    "lint": "eslint '**/*.{mjs,js}'",
     "release": "release-it --ci --config .release-it.js",
     "test": "c8 --all mocha",
     "test:watch": "mocha --watch"
@@ -23,6 +23,7 @@
     "eslint": "^8.4.1",
     "eslint-plugin-cypress": "^2.12.1",
     "mocha": "^9.1.3",
+    "node-fetch": "^3.2.0",
     "release-it": "^14.11.8",
     "testdouble": "^3.16.3"
   }
