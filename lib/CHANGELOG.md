@@ -1,3 +1,11 @@
+## 1.0.1 (2022-01-26)
+
+
+### Bug Fixes
+
+* Release 1.0.0 ([#7](https://github.com/oreillymedia/cypress-playback/issues/7)) ([ae75478](https://github.com/oreillymedia/cypress-playback/commit/ae7547845230b3769bf8fbf916fea157637f24fc))
+* Update lib package.json ([#9](https://github.com/oreillymedia/cypress-playback/issues/9)) ([3e0d8ea](https://github.com/oreillymedia/cypress-playback/commit/3e0d8ea40f491a9335b7b7cda732bdefe0dc8649))
+
 # 1.0.0 (2022-01-26)
 
 
