@@ -4,7 +4,7 @@
 !commands/**/*
 !plugins/**/*
 !addCommands.js
-!addPlugins.js
+!addTasks.js
 
 # Ignore tests and coverage
 coverage/
