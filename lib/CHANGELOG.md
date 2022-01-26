@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/oreillymedia/cypress-playback/compare/1.0.1...1.0.2) (2022-01-26)
+
+
+### Bug Fixes
+
+* Add 'addTasks.js' to .npmignore ([f8ec5bf](https://github.com/oreillymedia/cypress-playback/commit/f8ec5bf6d8ca0b46daf6aca0c7e5bac519bc6cae))
+
 ## 1.0.1 (2022-01-26)
 
 
