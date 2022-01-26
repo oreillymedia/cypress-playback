@@ -9,9 +9,23 @@
     "test": "c8 --all mocha",
     "test:watch": "mocha --watch"
   },
-  "keywords": [],
-  "author": "",
-  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/oreillymedia/cypress-playback.git"
+  },
+  "bugs": {
+    "url": "https://github.com/oreillymedia/cypress-playback/issues"
+  },
+  "homepage": "https://github.com/oreillymedia/cypress-playback#readme",
+  "keywords": [
+    "cypress",
+    "cypress-plugin",
+    "fixtures",
+    "requests",
+    "snapshots"
+  ],
+  "author": "O'Reilly Media",
+  "license": "BSD-3-Clause",
   "dependencies": {
     "blueimp-md5": "^2.19.0",
     "lodash.kebabcase": "^4.1.1"
