@@ -28,7 +28,7 @@ npm install @oreillymedia/cypress-playback -D
 
 ```JavaScript
 module.exports = (on, config) => {
-  require('@oreillymedia/cypress-playback/addPlugins')(on, config);
+  require('@oreillymedia/cypress-playback/addTasks')(on, config);
   // Add any other tasks
   return config;
 };
