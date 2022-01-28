@@ -1,3 +1,11 @@
+## [1.0.3](https://github.com/oreillymedia/cypress-playback/compare/1.0.1...1.0.3) (2022-01-28)
+
+
+### Bug Fixes
+
+* Add 'addTasks.js' to .npmignore ([f8ec5bf](https://github.com/oreillymedia/cypress-playback/commit/f8ec5bf6d8ca0b46daf6aca0c7e5bac519bc6cae))
+* Handle multiple set-cookie headers ([df54a2a](https://github.com/oreillymedia/cypress-playback/commit/df54a2af81e56e7fe4f0f7aaa2176500fa1f4860))
+
 ## [1.0.2](https://github.com/oreillymedia/cypress-playback/compare/1.0.1...1.0.2) (2022-01-26)
 
 
