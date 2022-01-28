@@ -1,5 +1,7 @@
 coverage/
 node_modules/
+sandbox/cypress/fixtures/private/
+sandbox/cypress/integration/private/
 sandbox/cypress/screenshots/
 sandbox/cypress/videos/
 secrets/
