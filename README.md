@@ -5,7 +5,7 @@
 
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](code_of_conduct.md)
 
-Cypress Playback is a plugin and a set of commands that allows Cypress to
+Cypress Playback is a plugin and a set of commands that allows [Cypress][7] to
 automatically record responses to network requests made during a test run. These
 responses are then saved to disk and made available for playback in later test
 runs. This allows for applications or components under test to always receive
@@ -16,7 +16,12 @@ instead a wrapper around that command. It handles situations where a developer
 isn't concerned with the contents of a response to a network request, just that
 the response is always the same.
 
-## Installation
+## Quick start
+
+This README contains the full documentation for Cypress Playback
+but this quick start will get you going in just a few minutes.
+
+### Installation
 
 **Step 1.** In a project with Cypress installed, run:
 
@@ -40,7 +45,7 @@ module.exports = (on, config) => {
 import '@oreillymedia/cypress-playback/addCommands';
 ```
 
-## The `playback` command
+### Insert `playback` commands
 
 The `playback` command is a wrapper around the [Cypress' `intercept`][1] command
 and can be used in much the same way.
@@ -51,7 +56,7 @@ plugin. This plugin is designed to capture real responses and record them for
 later playback. For providing fixtures as responses, the normal `cy.intercept`
 command should be used.
 
-### Syntax
+#### Syntax
 
 ```JavaScript
 // Records or plays back network responses, depending on the value of
@@ -69,6 +74,24 @@ cy.playback('GET', \/todos\/, { minTimes: 2 });
 // Aliasing the request for later use in the test.
 cy.playback('GET', 'https://www.example.com/300/150').as('image');
 ```
+
+### Run Cypress
+
+Run Cypress as you normally would using `cypress open`. By default using
+`cypress open` will operate Cypress playback in _hybrid_ mode,
+meaning it will save any requests that have not already been saved and
+fulfill ones that have and as such, is a great place to start.
+
+That's it! Your specified `playback` URL calls are now stored as static
+fixtures and will be automatically fulfilled in further test runs.
+
+Keep reading for further info on the various [playback modes](#playback-mode) and [playback API](#the-playback-command).
+
+---
+
+## API and usage documentation
+
+### The `playback` command
 
 #### Arguments
 
@@ -451,3 +474,4 @@ None
 [4]:https://docs.cypress.io/api/commands/intercept#Yields
 [5]:#requests-and-responses
 [6]:#all-requests-complete-assertion
+[7]:https://github.com/cypress-io/cypress
