@@ -5,7 +5,7 @@ describe('local to-do app', () => {
       cy.isRecordingRequests().then(isRecording => {
         // The scripts defined in the `package.json` cause the server to be run
         // at 8081 when recording and 8082 when playing back. This is to allow
-        // us to test the `matchingIgnores` feature.
+        // us to test the `matching.ignores` feature.
         if (isRecording) {
           baseUrl = `http://localhost:${8081}/`;
         } else if (isPlayingBack) {
@@ -20,7 +20,7 @@ describe('local to-do app', () => {
   it('does something', () => {
     cy.playback('GET', new RegExp('./assets/static-image.jpeg'),
       {
-        recording: { matchingIgnores: ['port'] }
+        matching: { ignores: ['port'] }
       }
     ).as('static');
 
@@ -28,7 +28,7 @@ describe('local to-do app', () => {
 
     cy.playback('GET', new RegExp('/todos/'),
       {
-        minTimes: 2
+        toBeCalledAtLeast: 2
       }
     ).as('todos');
 
