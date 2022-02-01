@@ -3,7 +3,8 @@
 > :arrows_counterclockwise: **_Automatically record and playback HTTP requests made in
 > Cypress tests._**
 
-[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](code_of_conduct.md)
+[![NPM](https://img.shields.io/npm/v/@oreillymedia/cypress-playback)][9]
+[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)][8]
 
 Cypress Playback is a plugin and a set of commands that allows [Cypress][7] to
 automatically record responses to network requests made during a test run. These
@@ -70,7 +71,7 @@ cy.playback(method, routeMatcher, playbackOptions);
 // Capturing a request.
 cy.playback('POST', \/users\/);
 // Providing playback options.
-cy.playback('GET', \/todos\/, { minTimes: 2 });
+cy.playback('GET', \/todos\/, { toBeCalledAtLeast: 2 });
 // Aliasing the request for later use in the test.
 cy.playback('GET', 'https://www.example.com/300/150').as('image');
 ```
@@ -85,7 +86,8 @@ fulfill ones that have and as such, is a great place to start.
 That's it! Your specified `playback` URL calls are now stored as static
 fixtures and will be automatically fulfilled in further test runs.
 
-Keep reading for further info on the various [playback modes](#playback-mode) and [playback API](#the-playback-command).
+Keep reading for further info on the various [playback modes](#playback-mode)
+and [playback API](#the-playback-command).
 
 ---
 
@@ -119,48 +121,23 @@ command. Below is an example object using all of the available properties.
 
 ```JavaScript
 {
-  minTimes: 2,
-  recording: {
-    matchingIgnores: ['port'],
-    rewriteOrigin: 'https://not-example.com',
-    allowAllStatusCodes: true
-  }
+  allowAllStatusCodes: true,
+  toBeCalledAtLeast: 1,
+  matching: {
+    ignores: {
+      attributes: ['port'],
+      bodyProperties: ['timestamp'],
+      searchParams: ['date']
+    }
+  },
+  rewriteOrigin: 'https://not-example.com'
 }
 ```
 
-###### **playbackOptions.minTimes (number)**
+More detailed examples of how to use these properties can be found in the
+["Requests and Responses"][5] section below.
 
-The minimum number of times the system under test must trigger a request that
-matches the `url` or `routeMatcher`. See ["All Requests Complete" Assertions][6]
-for more details.
-
-*Default:* `1` - At least 1 request must have been matched.
-
-###### **playbackOptions.recording (object)**
-
-This object modifies the behavior of the command when it is recording a network
-response to a request.
-
-*Default:* `undefined`
-
-###### **playbackOptions.recording.matchingIgnores (string[])**
-
-An array consisting of one or more of the following values:
-
-* `protocol`
-* `hostname`
-* `port`
-* `pathname`
-* `search`
-* `method`
-* `body`
-
-See the ["Requests and Responses"][5] section below for more details on how to
-use this property.
-
-*Default:* `undefined`
-
-###### **playbackOptions.recording.allowAllStatusCodes (boolean)**
+###### **playbackOptions.allowAllStatusCodes (boolean)**
 
 By default, the command will only record responses that have a `2xx` status
 code. By setting this to `true`, all responses will be recorded.
@@ -169,6 +146,53 @@ Note that trying to record `3xx` responses will lead to some strange behavior
 and is area where more work is needed in the plugin.
 
 *Default:* `false`
+
+###### **playbackOptions.toBeCalledAtLeast (number)**
+
+The minimum number of times the system under test must trigger a network request
+that matches the `url` or `routeMatcher`. See ["All Requests Complete"
+Assertions][6] for more details.
+
+*Default:* `1` - At least 1 request must have been matched.
+
+###### **playbackOptions.matching (object)**
+
+This object modifies how the command tries to match recorded responses to a
+network request.
+
+*Default:* `undefined`
+
+###### **playbackOptions.matching.ignores (string[] | object)**
+
+This property supports two different value types:
+
+* **`string[]`:** An array of network request attributes to ignore. See the
+  `attributes` entry below.
+
+* **`object:`** An object consisting of one or more of the following properties:
+
+  * **`attributes`:** A string array consisting of one or more of the following
+    values.
+    * `protocol`
+    * `hostname`
+    * `port`
+    * `pathname`
+    * `search`
+    * `method`
+    * `body`
+
+  * **`bodyProperties`:** A string array consisting of properties in the network
+    request body to ignore. This assumes that the body is a JSON object.
+
+  * **`searchParams`:** A string array consisting of search parameters on the
+    network request url to ignore.
+
+###### **playbackOptions.rewriteOrigin (string)**
+
+This string will be used in place of the current origin found in the network
+request's URL.
+
+*Default:* `undefined`
 
 #### Yields
 
@@ -190,11 +214,11 @@ to provide a few definitions first:
   the plugin may record multiple responses for a single matcher.
 
 > 🚨 **A Warning on Secrets:** A response that is recorded in the fixtures file,
-> which will likely be committed to the project's repository, will contain the
-> response's headers and body. While this file is binary and is compressed, it
-> isn't encrypted or protected in any way. When recording responses, make sure
-> there aren't any secrets used by a request or returned in a response that you
-> wouldn't want exposed.
+> which will likely be committed to the project's repository, will contain both
+> the request's and response's headers and body. While this file is binary and
+> is compressed, it isn't encrypted or protected in any way. When recording
+> responses, make sure there aren't any secrets used by a request or returned in
+> a response that you wouldn't want exposed.
 
 #### Request Matching versus Response Matching
 
@@ -225,10 +249,10 @@ that means the request handler will see information such as a request to
 
 What happens next depends on what mode the plugin is in:
 
-* If the plugin is in "playback" mode, it will try to find a recorded response
-  for that specific request.
 * If the plugin is in "record" mode, it will capture the response and write it
   to disk when the test is completed.
+* If the plugin is in "playback" mode, it will try to find a previously recorded
+  response for that specific request.
 
 More details on the plugin's mode can be found below.
 
@@ -252,7 +276,7 @@ request to match. The attributes that must match are:
 * `body`
 
 If any of those are different, the recorded response won't be returned. However,
-the `matchingIgnores` property allows the developer to specifically say certain
+the `matching.ignores` property allows the developer to specifically say certain
 attributes shouldn't be considered.
 
 > ℹ️ Note that while headers are recorded and played back, they are not used
@@ -266,9 +290,7 @@ developer should write their `playback` command like this:
 
 ```JavaScript
 cy.playback('GET', new RegExp('/api/v1/todo/'), {
-  recording: {
-    matchingIgnores: ['hostname', 'port']
-  }
+  matching: { ignores: ['hostname', 'port'] }
 });
 ```
 
@@ -276,6 +298,97 @@ Of course, there is a danger that if too many attributes of a request are
 ignored, the plugin won't find the correct response. For example, if every
 request attribute were ignored, then every recorded response would be a match.
 It's best to limit the list of ignored attributes to smallest number possible.
+
+##### Example 3: Ignoring Dynamic Values in a Network Request
+
+The application under test is making a `POST` request to an endpoint. The body
+of this network request contains a timestamp:
+
+```JSON
+{
+  "when": {
+    "timestamp": "2022-02-01T14:43:10.023Z"
+  }
+}
+```
+
+In addition, because the backend developer was malicious, the url for the
+network request must also contain a search parameter that includes the current
+date:
+
+```
+https://example.com/api/v1/access?current_date=2022-02-01
+```
+
+In this case, though, the developer can tell the playback command to ignore both
+that property and the search parameter when trying to find a matching response:
+
+```JavaScript
+cy.playback('POST', new RegExp('/api/v1/access'), {
+  matching: {
+    ignores: {
+      bodyProperties: ['when.timestamp'],
+      searchParams: ['current_date']
+    }
+  }
+});
+```
+
+###### Body Property Paths
+
+As seen above, the values in the `bodyProperties` array are strings defining
+where the property can be found in the object. The example below provides
+examples of supported paths.
+
+```JavaScript
+const example = {
+  foo: "value",
+  bar: {
+    baz: "value",
+    qux: [
+      {
+        'Some whitespace': {
+          quux: "value"
+        }
+      }
+    ]
+  }
+};
+
+// Paths to some of the properties above.
+const bodyProperties = [
+  'foo',`
+  'bar.baz',`
+  'bar.qux.0["Some whitespace"].quux',`
+];
+```
+
+Note that arrays are supported, but the indices are not surrounded by brackets.
+In addition, there is currently no concept of a wildcard that would cause a
+property to be removed from all object entries in an array.
+
+##### Example 5: Only One Response is Expected
+
+The application under test is only making a certain network request once during
+the test run. In addition, the developer is not concerned with any dynamic
+values that may be found in the request. In such a case, the `matching.anyOnce`
+property can be used:
+
+```JavaScript
+cy.playback('POST', new RegExp('/api/v1/access'), {
+  matching: { anyOnce: true }
+});
+```
+
+As its name implies, the `anyOnce` property expects there to only be one
+response recorded for a request matcher. During playback, it expects only a
+single network request will match that request matcher and, in that case, it
+provides the recorded response. If it ever tries to handle more than one network
+request, an error is thrown an the test will fail.
+
+The advantage of this property is that it can greatly simplify setting up
+response matching. In these cases, the developer doesn't have to pull apart the
+request and provide the dynamic elements to the `playback` command.
 
 ### Playback Mode
 
@@ -312,14 +425,14 @@ It can also be set in the `cypress.json`:
 
 During the `afterEach` stage of a test, the plugin will assert that all request
 matchers were matched a minimum number of times. The default number of times is
-`1`, but that value can be changed through the `minTimes` option.
+`1`, but that value can be changed through the `toBeCalledAtLeast` option.
 
 ```JavaScript
 // This request matcher is considered optional, so don't fail the test. There
 // is a danger in this, though. See the "Why This is Important" section below.
-cy.playback('GET', new RegExp('/api/v1/todo/'), { minTimes: 0 });
+cy.playback('GET', new RegExp('/api/v1/todo/'), { toBeCalledAtLeast: 0 });
 // This request matcher must be matched 5 times, or the test will fail.
-cy.playback('GET', new RegExp('/api/v1/todo/'), { minTimes: 5 });
+cy.playback('GET', new RegExp('/api/v1/todo/'), { toBeCalledAtLeast: 5 });
 ```
 
 What the plugin is doing during the `afterEach` stage is, over a period of time,
@@ -475,3 +588,5 @@ None
 [5]:#requests-and-responses
 [6]:#all-requests-complete-assertion
 [7]:https://github.com/cypress-io/cypress
+[8]:code-of-conduct.md
+[9]:https://www.npmjs.com/package/@oreillymedia/cypress-playback

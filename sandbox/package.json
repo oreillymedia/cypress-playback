@@ -10,7 +10,7 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "BSD-3-Clause",
   "devDependencies": {
     "@testing-library/cypress": "^8.0.2",
     "cypress": "^9.0.0",
