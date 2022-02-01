@@ -1,3 +1,10 @@
+# [2.1.0](https://github.com/oreillymedia/cypress-playback/compare/1.0.1...2.1.0) (2022-02-01)
+
+
+### Features
+
+* Add additional ignores, single response support ([64801dc](https://github.com/oreillymedia/cypress-playback/commit/64801dc3c9269e51d50110baf29e85453ac46fc6))
+
 ## [1.0.3](https://github.com/oreillymedia/cypress-playback/compare/1.0.1...1.0.3) (2022-01-28)
 
 
