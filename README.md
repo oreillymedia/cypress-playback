@@ -117,20 +117,21 @@ command's ["RouteMatcher"][3] documentation for more details.
 ##### **playbackOptions (PlaybackOptions)**
 
 `playbackOptions` is an object used to modify the behavior of the `playback`
-command. Below is an example object using all of the available properties.
+command. The example object below is showing the default values for all
+available properties.
 
 ```JavaScript
 {
-  allowAllStatusCodes: true,
+  allowAllStatusCodes: false,
   toBeCalledAtLeast: 1,
   matching: {
     ignores: {
-      attributes: ['port'],
-      bodyProperties: ['timestamp'],
-      searchParams: ['date']
+      attributes: [],
+      bodyProperties: [],
+      searchParams: []
     }
   },
-  rewriteOrigin: 'https://not-example.com'
+  rewriteOrigin: undefined
 }
 ```
 
