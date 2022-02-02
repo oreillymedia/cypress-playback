@@ -1,3 +1,10 @@
+## [2.1.1](https://github.com/oreillymedia/cypress-playback/compare/2.1.0...2.1.1) (2022-02-02)
+
+
+### Bug Fixes
+
+* Remove 'content-encoding' header in playback ([9dce356](https://github.com/oreillymedia/cypress-playback/commit/9dce356140c769605ca6c0de3d7a0f8897e24017))
+
 # [2.1.0](https://github.com/oreillymedia/cypress-playback/compare/1.0.1...2.1.0) (2022-02-01)
 
 
