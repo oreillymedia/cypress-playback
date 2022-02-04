@@ -5,6 +5,7 @@
   "description": "Automatically record and playback HTTP requests made in Cypress tests.",
   "scripts": {
     "sandbox:open": "cd ./sandbox/ && npm run start:open",
+    "sandbox:open:playback": "cd ./sandbox/ && npm run start:open:playback",
     "sandbox:ci": "cd ./sandbox/ && npm run start:run"
   },
   "repository": {

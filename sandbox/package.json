@@ -6,6 +6,7 @@
   "main": "index.js",
   "scripts": {
     "start:open": "start-server-and-test 'http-server ./app --port=8081' 8081 'cypress open'",
+    "start:open:playback": "CYPRESS_PLAYBACK_MODE=playback start-server-and-test 'http-server ./app --port=8082' 8082 'cypress open'",
     "start:run": "start-server-and-test 'http-server ./app --port=8082' 8082 'cypress run'"
   },
   "keywords": [],
