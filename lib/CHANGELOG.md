@@ -1,3 +1,11 @@
+## [2.1.2](https://github.com/oreillymedia/cypress-playback/compare/2.1.1...2.1.2) (2022-02-04)
+
+
+### Bug Fixes
+
+* Move 'allowed-control-allow-origin' overwrite ([8be816a](https://github.com/oreillymedia/cypress-playback/commit/8be816a45abd929662cb29eb8f600e494584f30e))
+* remove or flatten header arrays in response ([a0a9a2b](https://github.com/oreillymedia/cypress-playback/commit/a0a9a2ba65c4f34bd004b305a8a89461495d7444))
+
 ## [2.1.1](https://github.com/oreillymedia/cypress-playback/compare/2.1.0...2.1.1) (2022-02-02)
 
 
