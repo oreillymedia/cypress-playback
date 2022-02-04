@@ -7,9 +7,9 @@ describe('local to-do app', () => {
         // at 8081 when recording and 8082 when playing back. This is to allow
         // us to test the `matching.ignores` feature.
         if (isRecording) {
-          baseUrl = `http://localhost:${8081}/`;
+          baseUrl = `http://localhost:8081/`;
         } else if (isPlayingBack) {
-          baseUrl = `http://localhost:${8082}/`;
+          baseUrl = `http://localhost:8082/`;
         }
         cy.log(`isPlayingBack: ${isPlayingBack}`);
         cy.log(`isRecording: ${isRecording}`);
