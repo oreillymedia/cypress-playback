@@ -1,3 +1,10 @@
+## [2.1.3](https://github.com/oreillymedia/cypress-playback/compare/2.1.2...2.1.3) (2022-02-07)
+
+
+### Bug Fixes
+
+* Set 'access-control-allow-origin' to window origin ([96bfcfb](https://github.com/oreillymedia/cypress-playback/commit/96bfcfb5ac4baa5583001c9d24d25c64a41c6114))
+
 ## [2.1.2](https://github.com/oreillymedia/cypress-playback/compare/2.1.1...2.1.2) (2022-02-04)
 
 
