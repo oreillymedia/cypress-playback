@@ -24,7 +24,7 @@ jobs:
         run: |
           git config user.name "${GITHUB_ACTOR}"
           git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
-      - run: npm ci --silent
+      - run: npm ci --quiet
         working-directory: ${{env.lib-directory}}
       - run: npm run release ${{ fromJSON('["", "-- --preRelease alpha"]')[github.event.inputs.npmTag == 'alpha'] }}
         working-directory: ${{env.lib-directory}}

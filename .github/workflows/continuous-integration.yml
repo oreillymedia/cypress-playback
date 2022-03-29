@@ -16,7 +16,7 @@ jobs:
         registry-url: 'https://registry.npmjs.org'
         scope: '@oreillymedia'
     - name: Install Dependencies
-      run: npm ci --silent
+      run: npm ci --quiet
       working-directory: ${{env.lib-directory}}
     - name: Lint
       run: npm run lint --if-present
