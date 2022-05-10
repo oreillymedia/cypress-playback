@@ -1,3 +1,7 @@
+
+
+## [2.1.4](https://github.com/oreillymedia/cypress-playback/compare/2.1.3...2.1.4) (2022-05-10)
+
 ## [2.1.3](https://github.com/oreillymedia/cypress-playback/compare/2.1.2...2.1.3) (2022-02-07)
 
 
@@ -67,4 +71,3 @@
 ### Features
 
 * Initial commit ([10b77eb](https://github.com/oreillymedia/cypress-playback/commit/10b77eb7080c305bd71695b64c84ef2385a5db54))
-
