@@ -1,5 +1,7 @@
 
 
+## [2.1.5](https://github.com/oreillymedia/cypress-playback/compare/2.1.4...2.1.5) (2022-05-19)
+
 ## [2.1.4](https://github.com/oreillymedia/cypress-playback/compare/2.1.3...2.1.4) (2022-05-10)
 
 ## [2.1.3](https://github.com/oreillymedia/cypress-playback/compare/2.1.2...2.1.3) (2022-02-07)
