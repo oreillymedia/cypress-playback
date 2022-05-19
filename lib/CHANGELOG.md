@@ -1,5 +1,10 @@
 
 
+* feat: Support optional requests (1ed56ae)
+* Merge pull request #34 from oreillymedia/renovate/js-dependencies (6c3c94d)
+* chore(deps): pin dependency @release-it/conventional-changelog to 5.0.0 (03a30f5)
+* Merge pull request #32 from oreillymedia/release/2.1.4 (e9bdd64)
+
 ## [2.1.4](https://github.com/oreillymedia/cypress-playback/compare/2.1.3...2.1.4) (2022-05-10)
 
 ## [2.1.3](https://github.com/oreillymedia/cypress-playback/compare/2.1.2...2.1.3) (2022-02-07)
