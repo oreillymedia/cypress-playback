@@ -447,15 +447,21 @@ There are two factors that make this assertion important. One factor is that
 Cypress may consider a test complete before all the network requests made by the
 system under test are received. The other factor is that the order in which
 network requests complete is non-deterministic. This means that during one test
-run a request may complete before the test does, while in another it has not.
+run one request may complete before Cypress considers the test does, while in
+another run that same request has not.
 
 To handle that, the plugin tries to make sure every `playback` command has
-received a response that can be recorded. This is to ensure that all request
-matchers have responses available when the test is run in "playback" mode.
+received at least one response that can be recorded. This is to ensure that all
+request matchers have responses available when the test is run in "playback"
+mode.
 
-This is why an "optional" request matchers can be dangerous. If a response is
-not captured for a request in `record` mode, the test would fail when that
-request was made when in `playback` mode.
+All of this is to explain why an "optional" request matcher can be dangerous.
+Setting `toBeCalledAtLeast` to `0` tells the plugin that not receiving a request
+matching that `playback` command is fine. When the plugin is running in "record"
+or "hybrid" mode, the test will not be failed because of this. However, when the
+plugin is running in "playback" mode and a request is made that matches that
+`playback` command, the plugin returns a `404`. That may result in a flaky test
+that can be hard to debug.
 
 #### "Stale" Request Matchers and Responses
 
