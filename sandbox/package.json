@@ -13,9 +13,9 @@
   "author": "",
   "license": "BSD-3-Clause",
   "devDependencies": {
-    "@testing-library/cypress": "8.0.2",
+    "@testing-library/cypress": "8.0.3",
     "cypress": "9.7.0",
-    "http-server": "14.1.0",
+    "http-server": "14.1.1",
     "start-server-and-test": "1.14.0"
   }
 }
