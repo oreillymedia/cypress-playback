@@ -40,5 +40,10 @@
     "node-fetch": "3.2.4",
     "release-it": "15.1.1",
     "testdouble": "3.16.6"
+  },
+  "overrides": {
+    "parse-url@6.0.2": {
+      "parse-path": "5.0.0"
+    }
   }
 }
