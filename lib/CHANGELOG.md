@@ -1,5 +1,12 @@
 
 
+## [2.2.2](https://github.com/oreillymedia/cypress-playback/compare/2.2.1...2.2.2) (2022-07-21)
+
+
+### Bug Fixes
+
+* get invocation details from parent ([34c9f96](https://github.com/oreillymedia/cypress-playback/commit/34c9f96910932f1c6a4d835c76b15f4c4e265e83))
+
 ## [2.2.1](https://github.com/oreillymedia/cypress-playback/compare/2.1.5...2.2.1) (2022-05-23)
 
 ## [2.1.5](https://github.com/oreillymedia/cypress-playback/compare/2.1.4...2.1.5) (2022-05-19)
