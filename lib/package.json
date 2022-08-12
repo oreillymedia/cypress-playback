@@ -28,7 +28,8 @@
   "license": "BSD-3-Clause",
   "dependencies": {
     "blueimp-md5": "2.19.0",
-    "lodash.kebabcase": "4.1.1"
+    "lodash.kebabcase": "4.1.1",
+    "node-fetch": "3.2.10"
   },
   "devDependencies": {
     "@release-it/conventional-changelog": "5.0.0",
