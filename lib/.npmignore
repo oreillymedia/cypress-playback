@@ -2,7 +2,7 @@
 /*
 
 !commands/**/*
-!plugins/**/*
+!tasks/**/*
 !addCommands.js
 !addTasks.js
 

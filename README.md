@@ -483,7 +483,7 @@ A "stale" entity becomes "fresh" when...
 ### The Recorded Fixtures File
 
 All the captured responses for a test are grouped together into a single
-`.cy-requests` file that is saved to the Cypress fixtures folder. A subdirectory
+`.cy-playbacks` file that is saved to the Cypress fixtures folder. A subdirectory
 is created in the fixtures folder for each spec file. Within that folder, a
 fixture file is created for each test in the spec file. The file name is a
 combination of the test's name and any `describe` blocks it is nested under.
@@ -509,9 +509,9 @@ Consider the following example spec file.
   ```
 * **Generated Fixture Files:**
   ```bash
-  ./cypress/fixtures/app/basic-spec/app-works.cy-requests
-  ./cypress/fixtures/app/basic-spec/app-still-works.cy-requests
-  ./cypress/fixtures/app/basic-spec/app-another-language-works.cy-requests
+  ./cypress/fixtures/app/basic-spec/app-works.cy-playbacks
+  ./cypress/fixtures/app/basic-spec/app-still-works.cy-playbacks
+  ./cypress/fixtures/app/basic-spec/app-another-language-works.cy-playbacks
   ```
 
 > ⚠️ As can seen, if the location of the spec file or the structure or name of
@@ -521,7 +521,7 @@ Consider the following example spec file.
 
 #### File Format
 
-The `.cy-requests` file is a binary file, which is created by JSON stringifying
+The `.cy-playbacks` file is a binary file, which is created by JSON stringifying
 the request matchers and requests and compressing that output with Node's
 `zlib.deflate` function. There are two reasons for this approach:
 
