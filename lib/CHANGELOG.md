@@ -1,5 +1,23 @@
 
 
+# [3.0.0](https://github.com/oreillymedia/cypress-playback/compare/2.2.2...3.0.0) (2022-08-12)
+
+
+### Features
+
+* Support Cypress 10 ([c2a4ece](https://github.com/oreillymedia/cypress-playback/commit/c2a4ecec3b39d6a3710192eebe1148c32000fb30))
+
+
+### BREAKING CHANGES
+
+* In Cypress 10, the 'integrationFolder' was removed from the
+config. This value had been used to determine where to save and load the request
+fixtures, so a new approach has been implemented and the plugin cannot find
+previously created fixtures.
+* The file extension of the recorded fixtures was changed to
+'.cy-playback' to make it easier to identify that these files belong to the
+plugin.
+
 ## [2.2.2](https://github.com/oreillymedia/cypress-playback/compare/2.2.1...2.2.2) (2022-07-21)
 
 
