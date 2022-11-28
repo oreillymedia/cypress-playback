@@ -13,8 +13,8 @@
   "author": "",
   "license": "BSD-3-Clause",
   "devDependencies": {
-    "@testing-library/cypress": "8.0.3",
-    "cypress": "10.9.0",
+    "@testing-library/cypress": "8.0.7",
+    "cypress": "10.11.0",
     "http-server": "14.1.1",
     "start-server-and-test": "1.14.0"
   }
