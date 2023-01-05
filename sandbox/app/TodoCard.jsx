@@ -6,6 +6,19 @@ const {
   Typography,
 } = MaterialUI;
 
+const ids = [
+  "9781491952016",
+  "9781800562523",
+  "9781492071198",
+  "9780136502166",
+  "9781492055747",
+  "9781098122249",
+  "9781617295867",
+  "9781801079976",
+  "9781789539509",
+  "9780136752899",
+];
+
 export function TodoCard({ todo }) {
   return (
     <Grid item xs={12} sm={6} md={4}>
@@ -18,7 +31,7 @@ export function TodoCard({ todo }) {
             maxHeight: 200,
             maxWidth: 300
           }}
-          image={`https://www.fillmurray.com/300/${200 + todo.id * 2}`}
+          image={`https://learning.oreilly.com/covers/urn:orm:book:${ids[todo.id]}/300w/`}
           alt="random"
         />
         <CardContent sx={{ flexGrow: 1 }}>

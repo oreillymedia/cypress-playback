@@ -18,13 +18,13 @@ describe('local to-do app', () => {
   });
 
   it('does something', () => {
-    cy.playback('GET', new RegExp('./assets/static-image.jpeg'),
+    cy.playback('GET', new RegExp('./assets/static-image.png'),
       {
         matching: { ignores: ['port'] }
       }
     ).as('static');
 
-    cy.playback('GET', new RegExp('fillmurray')).as('image');
+    cy.playback('GET', new RegExp('learning\.oreilly')).as('image');
 
     cy.playback('GET', new RegExp('/todos/'),
       {

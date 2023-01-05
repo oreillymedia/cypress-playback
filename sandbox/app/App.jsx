@@ -48,7 +48,7 @@ export function App() {
             Todo
           </Typography>
           <Container>
-            <img src="./assets/static-image.jpeg" alt="static-image" />
+            <img src="./assets/static-image.png" alt="static-image" />
           </Container>
           <Grid container spacing={4}>
             {todos.map((todo) => (
