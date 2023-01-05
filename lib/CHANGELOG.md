@@ -1,5 +1,12 @@
 
 
+## [3.0.2](https://github.com/oreillymedia/cypress-playback/compare/3.0.1...3.0.2) (2023-01-05)
+
+
+### Bug Fixes
+
+* **deps:** Update sandbox tooling ([d484e2a](https://github.com/oreillymedia/cypress-playback/commit/d484e2a819eb836c3d849834cd3ed84a5da19554))
+
 ## [3.0.1](https://github.com/oreillymedia/cypress-playback/compare/3.0.0...3.0.1) (2022-09-28)
 
 # [3.0.0](https://github.com/oreillymedia/cypress-playback/compare/2.2.2...3.0.0) (2022-08-12)
