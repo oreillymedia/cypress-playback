@@ -5,16 +5,16 @@
   "description": "Sandbox for developing and testing the @oreillymedia/cypress-playback library.",
   "main": "index.js",
   "scripts": {
-    "start:open": "start-server-and-test 'http-server ./app --port=8081' 8081 'cypress open --e2e'",
-    "start:open:playback": "CYPRESS_PLAYBACK_MODE=playback start-server-and-test 'http-server ./app --port=8082' 8082 'cypress open --e2e'",
-    "start:run": "start-server-and-test 'http-server ./app --port=8082' 8082 'cypress run --e2e'"
+    "start:open": "start-server-and-test --expect 200 'http-server ./app --port=8081' http://127.0.0.1:8081 'cypress open --e2e'",
+    "start:open:playback": "CYPRESS_PLAYBACK_MODE=playback start-server-and-test --expect 200 'http-server ./app --port=8082' http://127.0.0.1:8082 'cypress open --e2e'",
+    "start:run": "start-server-and-test --expect 200 'http-server ./app --port=8082' http://127.0.0.1:8082 'cypress run --e2e'"
   },
   "keywords": [],
   "author": "",
   "license": "BSD-3-Clause",
   "devDependencies": {
-    "@testing-library/cypress": "8.0.7",
-    "cypress": "10.11.0",
+    "@testing-library/cypress": "9.0.0",
+    "cypress": "12.3.0",
     "http-server": "14.1.1",
     "start-server-and-test": "1.15.2"
   }
