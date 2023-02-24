@@ -30,17 +30,17 @@ but this quick start will get you going in just a few minutes.
 npm install @oreillymedia/cypress-playback -D
 ```
 
-**Step 2.** Add the tasks to the project's `cypress/plugins/index.js` file:
+**Step 2.** Add the tasks to the project's `setupNodeEvents` in `cypress.config.js` file
+([Cypress plugin usage docs][10]):
 
 ```JavaScript
-module.exports = (on, config) => {
+setupNodeEvents(on, config) => {
   require('@oreillymedia/cypress-playback/addTasks')(on, config);
-  // Add any other tasks
-  return config;
-};
+  ...
+})
 ```
 
-**Step 3.** Add the commands to the project's `cypress/support/index.js` file:
+**Step 3.** Add the commands to the project's `cypress/support/commands.js` file:
 
 ```JavaScript
 import '@oreillymedia/cypress-playback/addCommands';
@@ -597,3 +597,4 @@ None
 [7]:https://github.com/cypress-io/cypress
 [8]:code-of-conduct.md
 [9]:https://www.npmjs.com/package/@oreillymedia/cypress-playback
+[10]:https://docs.cypress.io/guides/tooling/plugins-guide#Using-a-plugin
