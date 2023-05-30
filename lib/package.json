@@ -35,12 +35,12 @@
     "@release-it/conventional-changelog": "5.1.1",
     "c8": "7.13.0",
     "chai": "4.3.7",
-    "cypress": "12.8.1",
-    "eslint": "8.39.0",
-    "eslint-plugin-cypress": "2.13.2",
+    "cypress": "12.13.0",
+    "eslint": "8.41.0",
+    "eslint-plugin-cypress": "2.13.3",
     "mocha": "10.2.0",
-    "release-it": "15.10.1",
-    "testdouble": "3.17.2"
+    "release-it": "15.10.3",
+    "testdouble": "3.18.0"
   },
   "peerDependencies": {
     "cypress": ">=10"
