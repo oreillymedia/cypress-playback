@@ -1,5 +1,12 @@
 
 
+## [3.0.5](https://github.com/oreillymedia/cypress-playback/compare/3.0.4...3.0.5) (2023-07-10)
+
+
+### Bug Fixes
+
+* **codeql:** Remove useless escape from test ([918e00d](https://github.com/oreillymedia/cypress-playback/commit/918e00d90599a07796b22903e9329b20b69893b1))
+
 ## [3.0.4](https://github.com/oreillymedia/cypress-playback/compare/3.0.3...3.0.4) (2023-05-01)
 
 ## [3.0.3](https://github.com/oreillymedia/cypress-playback/compare/3.0.2...3.0.3) (2023-02-13)
