@@ -24,7 +24,7 @@ describe('local to-do app', () => {
       }
     ).as('static');
 
-    cy.playback('GET', new RegExp('learning\.oreilly')).as('image');
+    cy.playback('GET', new RegExp('learning.oreilly')).as('image');
 
     cy.playback('GET', new RegExp('/todos/'),
       {
