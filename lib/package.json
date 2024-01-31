@@ -1,10 +1,10 @@
 {
-  "name": "@ui-ux/cypress-playback",
-  "version": "0.0.2",
+  "name": "@oreillymedia/cypress-playback",
+  "version": "3.0.7",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint",
+    "lint": "eslint '**/*.{mjs,js}'",
     "release": "release-it --ci --config .release-it.js",
     "test": "c8 --all mocha",
     "test:watch": "mocha --watch"
@@ -13,9 +13,10 @@
     "type": "git",
     "url": "https://github.com/oreillymedia/cypress-playback.git"
   },
-  "publishConfig": {
-    "@safesim:registry": "https://gitlab.radiancetech.com/api/v4/packages/npm/"
+  "bugs": {
+    "url": "https://github.com/oreillymedia/cypress-playback/issues"
   },
+  "homepage": "https://github.com/oreillymedia/cypress-playback#readme",
   "keywords": [
     "cypress",
     "cypress-plugin",
