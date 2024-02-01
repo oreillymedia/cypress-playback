@@ -1,6 +1,6 @@
 describe('local to-do app', () => {
   let baseUrl;
-  before(() => {
+  beforeEach(() => {
     cy.isPlayingBackRequests().then(isPlayingBack => {
       cy.isRecordingRequests().then(isRecording => {
         // The scripts defined in the `package.json` cause the server to be run
