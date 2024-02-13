@@ -39,4 +39,27 @@ describe('local to-do app', () => {
     cy.wait('@static');
     cy.get('h1').should('be.visible');
   });
+
+  it("can read an old playback file", () => {
+    cy.playback('GET', new RegExp('./assets/static-image.png'),
+      {
+        matching: { ignores: ['port'] }
+      }
+    ).as('static');
+
+    cy.playback('GET', new RegExp('learning.oreilly')).as('image');
+
+    cy.playback('GET', new RegExp('/todos/'),
+      {
+        toBeCalledAtLeast: 2
+      }
+    ).as('todos');
+
+    cy.visit(baseUrl);
+
+    cy.wait('@todos');
+    cy.wait('@image');
+    cy.wait('@static');
+    cy.get('h1').should('be.visible');
+  })
 });
