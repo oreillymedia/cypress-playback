@@ -1,5 +1,12 @@
 
 
+## [3.0.8-alpha.0](https://github.com/oreillymedia/cypress-playback/compare/3.0.7...3.0.8-alpha.0) (2024-02-26)
+
+
+### Bug Fixes
+
+* **tests:** use 'chai/register-expect' ([1dfa3cb](https://github.com/oreillymedia/cypress-playback/commit/1dfa3cb713f5f1cc2823b6919e06dd1d2f89c57c))
+
 ## [3.0.7](https://github.com/oreillymedia/cypress-playback/compare/3.0.6...3.0.7) (2023-10-02)
 
 ## [3.0.6](https://github.com/oreillymedia/cypress-playback/compare/3.0.5...3.0.6) (2023-08-28)
