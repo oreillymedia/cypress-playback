@@ -37,9 +37,9 @@
     "chai": "5.1.0",
     "cypress": "13.7.1",
     "eslint": "8.57.0",
-    "eslint-plugin-cypress": "2.15.1",
+    "eslint-plugin-cypress": "2.15.2",
     "mocha": "10.4.0",
-    "release-it": "17.1.1",
+    "release-it": "17.2.1",
     "testdouble": "3.20.2"
   },
   "peerDependencies": {
