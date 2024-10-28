@@ -34,12 +34,12 @@
   "devDependencies": {
     "@release-it/conventional-changelog": "8.0.2",
     "c8": "10.1.2",
-    "chai": "5.1.1",
+    "chai": "5.1.2",
     "cypress": "13.15.0",
     "eslint": "8.57.1",
-    "eslint-plugin-cypress": "3.5.0",
+    "eslint-plugin-cypress": "3.6.0",
     "mocha": "10.7.3",
-    "release-it": "17.6.0",
+    "release-it": "17.10.0",
     "testdouble": "3.20.2"
   },
   "peerDependencies": {
