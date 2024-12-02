@@ -73,6 +73,13 @@ cy.playback('POST', \/users\/);
 // Providing playback options.
 cy.playback('GET', \/todos\/, { toBeCalledAtLeast: 2 });
 // Aliasing the request for later use in the test.
+ // In case of static assets, it is best to clear the browser cache to ensure proper interception:
+cy.wrap(
+  Cypress.automation('remote:debugger:protocol', {
+    command: 'Network.clearBrowserCache'
+  })
+)
+
 cy.playback('GET', 'https://www.example.com/300/150').as('image');
 ```
 
