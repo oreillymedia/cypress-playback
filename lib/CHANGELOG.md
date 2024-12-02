@@ -1,5 +1,12 @@
 
 
+## [3.0.10](https://github.com/oreillymedia/cypress-playback/compare/3.0.9...3.0.10) (2024-12-02)
+
+
+### Bug Fixes
+
+* change package cdn from unpkg to jsdelivr ([4055cb1](https://github.com/oreillymedia/cypress-playback/commit/4055cb142e6389c4c473b600188230cdd47253a4))
+
 ## [3.0.9](https://github.com/oreillymedia/cypress-playback/compare/3.0.8...3.0.9) (2024-07-09)
 
 ## [3.0.8](https://github.com/oreillymedia/cypress-playback/compare/3.0.7...3.0.8) (2024-02-26)
