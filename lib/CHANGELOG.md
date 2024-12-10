@@ -1,5 +1,7 @@
 
 
+## [3.0.11](https://github.com/oreillymedia/cypress-playback/compare/3.0.10...3.0.11) (2024-12-10)
+
 ## [3.0.10](https://github.com/oreillymedia/cypress-playback/compare/3.0.9...3.0.10) (2024-12-02)
 
 
