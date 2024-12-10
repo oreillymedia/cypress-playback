@@ -6,7 +6,10 @@
   "scripts": {
     "sandbox:open": "cd ./sandbox/ && npm run start:open",
     "sandbox:open:playback": "cd ./sandbox/ && npm run start:open:playback",
-    "sandbox:ci": "cd ./sandbox/ && npm run start:run"
+    "sandbox:ci": "cd ./sandbox/ && npm run start:run",
+    "postinstall": "echo '@oreillymedia/cypress-playback - After Feb 28, 2025 this library will no longer be maintained. Please see README for more information.'"
+
+
   },
   "repository": {
     "type": "git",

@@ -1,5 +1,11 @@
 # Cypress Playback
 
+## 🚨 This library will only receive security updates until Feb 28, 2025 when it will no longer be maintained. 🚨
+
+**We recommend using Mock Service Worker (MSW) instead of this plugin. MSW solves a similar problem but is more flexible and can be used in a variety of environments including Cypress, Node.js and Jest. For more information, see the [MSW documentation][11].**
+
+---
+
 > :arrows_counterclockwise: **_Automatically record and playback HTTP requests made in
 > Cypress tests._**
 
@@ -598,3 +604,4 @@ None
 [8]:code-of-conduct.md
 [9]:https://www.npmjs.com/package/@oreillymedia/cypress-playback
 [10]:https://docs.cypress.io/guides/tooling/plugins-guide#Using-a-plugin
+[11]:https://mswjs.io/docs/comparison#cypress---cyintercept
