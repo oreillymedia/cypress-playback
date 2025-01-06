@@ -16,6 +16,6 @@
     "@testing-library/cypress": "10.0.2",
     "cypress": "13.16.0",
     "http-server": "14.1.1",
-    "start-server-and-test": "2.0.8"
+    "start-server-and-test": "2.0.9"
   }
 }
