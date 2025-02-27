@@ -1,8 +1,14 @@
 # Cypress Playback
 
-## 🚨 This library will only receive security updates until Feb 28, 2025 when it will no longer be maintained. 🚨
+## 🚨 This library is no longer maintained. 🚨
+Since the creation of this library, the Mock Service Worker API has seen some
+significant updates and support and it currently provides, in our opinion, 
+a more flexible and better solution to what this library was created to solve.
 
-**We recommend using Mock Service Worker (MSW) instead of this plugin. MSW solves a similar problem but is more flexible and can be used in a variety of environments including Cypress, Node.js and Jest. For more information, see the [MSW documentation][11].**
+**We recommend using Mock Service Worker (MSW) instead of this plugin. 
+MSW solves a similar problem but is more flexible and can be used in a variety
+of environments including Cypress, Node.js and Jest. For more information,
+see the [MSW documentation][11].**
 
 ---
 
